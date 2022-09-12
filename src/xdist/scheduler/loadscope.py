@@ -289,7 +289,9 @@ class LoadScopeScheduling:
             example/loadsuite/test/test_delta.py::Delta1
             example/loadsuite/epsilon/__init__.py
         """
-        return nodeid.rsplit("::", 1)[0]
+        base, squacket, rest = nodeid.partition('[')
+        strpath, *parts = base.split('::')
+        return '::'.join([strpath, f"{parts[0]}{squacket}{rest}"])
 
     def _pending_of(self, workload):
         """Return the number of pending tests in a workload."""
